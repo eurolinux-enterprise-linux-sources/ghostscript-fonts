@@ -1,7 +1,7 @@
 Summary: Fonts for the Ghostscript PostScript interpreter
 Name: ghostscript-fonts
 Version: 5.50
-Release: 23.1%{?dist}
+Release: 23.2%{?dist}
 # Contacted Kevin Hartig, who agreed to relicense his fonts under the SIL Open Font 
 # License. Hershey fonts are under the "Hershey Font License", which is not what Fontmap 
 # says (Fontmap is wrong).
@@ -9,9 +9,17 @@ License: GPLv2+ and Hershey and MIT and OFL and Public Domain
 Group: Applications/Publishing
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 URL: http://www.gnu.org/software/ghostscript/
-Source0: http://ftp.gnu.org/gnu/ghostscript/gnu-gs-fonts-other-%{version}.tar.gz
+Source0: gnu-gs-fonts-other-%{version}-nobch.tar.gz
 Source1: Kevin_Hartig-Font_License.txt
 Source2: SIL-Open-Font-License.txt
+# gnu-gs-fonts-other-5.50 contains fonts with a non-free license (bug #690593,
+# bug #1067294).
+# Therefore we use this script to remove those fonts before shipping
+# it.  Download the upstream tarball (from
+# http://ftp.gnu.org/gnu/ghostcript/gnu/) and invoke this script while in
+# the tarball's directory:
+# ./generate-tarball.sh 5.50
+Source3: generate-tarball.sh
 Requires: fontconfig
 Requires(post): xorg-x11-font-utils
 Requires(post): fontconfig
@@ -65,6 +73,9 @@ rm -rf $RPM_BUILD_ROOT
 %{catalogue}/default-ghostscript
 
 %changelog
+* Thu Feb 27 2014 Tim Waugh <twaugh@redhat.com> 5.50-23.2
+- Removed non-free fonts (bug #1067294).
+
 * Mon Nov 30 2009 Dennis Gregorovic <dgregor@redhat.com> - 5.50-23.1
 - Rebuilt for RHEL 6
 
