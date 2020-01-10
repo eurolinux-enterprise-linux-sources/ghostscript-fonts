@@ -1,7 +1,7 @@
 Summary: Fonts for the Ghostscript PostScript interpreter
 Name: ghostscript-fonts
 Version: 5.50
-Release: 31%{?dist}
+Release: 32%{?dist}
 # Contacted Kevin Hartig, who agreed to relicense his fonts under the SIL Open Font 
 # License. Hershey fonts are under the "Hershey Font License", which is not what Fontmap 
 # says (Fontmap is wrong).
@@ -80,6 +80,9 @@ rm -rf $RPM_BUILD_ROOT
 %ghost %verify(not md5 size mtime) %{fontdir}/fonts.scale
 
 %changelog
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 5.50-32
+- Mass rebuild 2013-12-27
+
 * Wed Nov  6 2013 Tim Waugh <twaugh@redhat.com> - 5.50-31
 - Run fc-cache on our font directory, not the entire font collection
   (bug #1023977).
